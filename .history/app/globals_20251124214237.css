@@ -1,0 +1,189 @@
+@import "tailwindcss";
+
+/* ===== Base Tweaks ===== */
+html, body { height: 100%; margin: 0; padding: 0; }
+* { -webkit-tap-highlight-color: transparent; }
+:focus-visible { outline: 2px solid #93c5fd; outline-offset: 2px; }
+
+/* ============================================================
+   ANIMATIONS — CLEAN + UNIQUE
+============================================================ */
+
+/* Fade In */
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.96); }
+  to   { opacity: 1; transform: scale(1); }
+}
+.animate-fadeIn {
+  animation: fadeIn 0.25s ease-out;
+}
+
+/* Scale In */
+@keyframes scaleIn {
+  0%   { transform: scale(0.85); opacity: 0; }
+  100% { transform: scale(1);   opacity: 1; }
+}
+.animate-scaleIn {
+  animation: scaleIn .35s ease-out;
+}
+
+/* Pop */
+@keyframes pop {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.15); }
+  100% { transform: scale(1); }
+}
+.animate-pop { animation: pop 250ms ease-out; }
+
+/* ============================================================
+   SPARKLE BURST
+============================================================ */
+
+.sparkle {
+  position: absolute;
+  transform: translate(-50%, -50%) scale(0.9);
+  font-size: 20px;
+  animation: sparkle-fly 0.9s ease-out forwards;
+  pointer-events: none;
+}
+
+@keyframes sparkle-fly {
+  0%   { transform: translate(-50%, -50%) scale(0.8); opacity: 1; }
+  70%  { transform: translate(-50%, -50%) scale(1.2); opacity: .95; }
+  100% { transform: translate(-50%, -50%) scale(1);   opacity: 0; }
+}
+
+/* ============================================================
+   PROFESSIONAL CHEER BURST
+============================================================ */
+
+:root {
+  --cb-spark-min: 26px;
+  --cb-spark-max: 54px;
+  --cb-spark-dur: 700ms;
+}
+
+.cb-cheer-halo {
+  position: absolute;
+  inset: -6px;
+  border-radius: 14px;
+  pointer-events: none;
+  opacity: 0;
+  transform: scale(.9);
+  background:
+    radial-gradient(60% 60% at 50% 50%, rgba(56,189,248,.28), transparent 65%),
+    radial-gradient(100% 60% at 50% 50%, rgba(20,184,166,.18), transparent 70%);
+  transition: opacity 220ms ease, transform 220ms ease;
+}
+.cb-cheer-press .cb-cheer-halo {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.cb-spark {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%,-50%);
+  pointer-events: none;
+}
+
+.cb-spark::after {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 18px; height: 2px;
+  border-radius: 2px;
+  transform: translate(-50%, -50%) rotate(var(--rot,0));
+  background: linear-gradient(90deg, rgba(255,255,255,.7), rgba(255,255,255,0));
+}
+
+@keyframes cb-out {
+  0%   { transform: translate(-50%,-50%) scale(.8); opacity: 1; }
+  100% { transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) scale(1); opacity: 0; }
+}
+
+.cb-s1 { animation: cb-out var(--cb-spark-dur) ease-out forwards; }
+.cb-s2 { animation: cb-out calc(var(--cb-spark-dur) + 60ms) ease-out forwards; }
+.cb-s3 { animation: cb-out calc(var(--cb-spark-dur) + 140ms) ease-out forwards; }
+
+@media (prefers-reduced-motion: reduce) {
+  .cb-spark, .cb-cheer-halo {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* ============================================================
+   EMOJI BURST
+============================================================ */
+
+@keyframes cb-burst {
+  0%   { transform: translate(-50%, -50%) scale(.6); opacity: 1; }
+  70%  { opacity: 1; }
+  100% { transform: translate(calc(-50% + var(--x)), calc(-50% + var(--y) - 24px)) scale(1); opacity: 0; }
+}
+
+.cb-emoji-spark {
+  position: absolute;
+  top: 50%; left: 50%;
+  pointer-events: none;
+  font-size: 14px;
+  animation: cb-burst 700ms ease-out forwards;
+}
+
+/* ============================================================
+   SHIMMER / GRADIENT TEXT
+============================================================ */
+
+@layer utilities {
+  .gradient-text {
+    background-size: 200% 100%;
+  }
+
+  @keyframes shimmer {
+    0%   { background-position: 0% 0%; }
+    100% { background-position: 200% 0%; }
+  }
+
+  .animate-shimmer {
+    animation: shimmer 8s linear infinite;
+  }
+}
+
+/* ============================================================
+   PREMIUM PULSE
+============================================================ */
+
+@keyframes pulseSoft {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.4);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px 6px rgba(99, 102, 241, 0.25);
+  }
+}
+
+.animate-pulse-soft {
+  animation: pulseSoft 4s ease-in-out infinite;
+}
+@keyframes cb-rotate3d {
+  0%   { transform: rotate3d(1, 1, 0, 0deg); }
+  50%  { transform: rotate3d(1, 1, 0, 15deg); }
+  100% { transform: rotate3d(1, 1, 0, 0deg); }
+}
+
+.animate-rotate3d {
+  animation: cb-rotate3d 6s ease-in-out infinite;
+  transform-style: preserve-3d;
+}
+@keyframes cb-morph {
+  0%   { transform: scale(1) rotate(0deg); }
+  40%  { transform: scale(0.4) rotate(10deg); }
+  100% { transform: scale(1) rotate(45deg); }
+}
+
+.morph-in {
+  animation: cb-morph 350ms ease-out forwards;
+}

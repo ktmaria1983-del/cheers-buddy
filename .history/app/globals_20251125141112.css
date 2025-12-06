@@ -1,0 +1,294 @@
+@import "tailwindcss";
+
+/* -----------------------------------------------------------
+   CHEERBUDDY — BASE RESET + UX TWEAKS
+----------------------------------------------------------- */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+ html {
+  scroll-behavior: smooth;
+}
+
+* { -webkit-tap-highlight-color: transparent; }
+
+:focus-visible {
+  outline: 2px solid #93c5fd;
+  outline-offset: 2px;
+}
+
+/* -----------------------------------------------------------
+   CHEERBUDDY — CORE ANIMATIONS
+----------------------------------------------------------- */
+
+/* Fade In */
+@keyframes cb-fadeIn {
+  from { opacity: 0; transform: scale(0.96); }
+  to   { opacity: 1; transform: scale(1); }
+}
+.animate-fadeIn {
+  animation: cb-fadeIn 0.25s ease-out;
+}
+
+/* Scale In */
+@keyframes cb-scaleIn {
+  0%   { transform: scale(0.85); opacity: 0; }
+  100% { transform: scale(1);   opacity: 1; }
+}
+.animate-scaleIn {
+  animation: cb-scaleIn .35s ease-out;
+}
+
+/* Pop */
+@keyframes cb-pop {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.15); }
+  100% { transform: scale(1); }
+}
+.animate-pop {
+  animation: cb-pop 250ms ease-out;
+}
+
+/* -----------------------------------------------------------
+   CHEERBUDDY — 3D ROTATION
+----------------------------------------------------------- */
+@keyframes cb-rotate3d {
+  0%   { transform: rotate3d(1, 1, 0, 0deg); }
+  50%  { transform: rotate3d(1, 1, 0, 15deg); }
+  100% { transform: rotate3d(1, 1, 0, 0deg); }
+}
+.animate-rotate3d {
+  animation: cb-rotate3d 6s ease-in-out infinite;
+  transform-style: preserve-3d;
+}
+
+/* -----------------------------------------------------------
+   CHEERBUDDY — MORPH IN
+----------------------------------------------------------- */
+@keyframes cb-morph {
+  0%   { transform: scale(1) rotate(0deg); }
+  40%  { transform: scale(0.4) rotate(10deg); }
+  100% { transform: scale(1) rotate(45deg); }
+}
+.morph-in {
+  animation: cb-morph 350ms ease-out forwards;
+}
+
+/* -----------------------------------------------------------
+   CHEERBUDDY — SOFT PULSE (FAB)
+----------------------------------------------------------- */
+@keyframes cb-pulseSoft {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.35);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 0 25px 6px rgba(255, 255, 255, 0.25);
+  }
+}
+.animate-pulse-soft {
+  animation: cb-pulseSoft 4s ease-in-out infinite;
+}
+
+/* -----------------------------------------------------------
+   CHEERBUDDY — SPARKLE BURST (HOME + EXPLORE)
+----------------------------------------------------------- */
+@keyframes cb-sparkleFly {
+  0%   { transform: translate(-50%, -50%) scale(0.8); opacity: 1; }
+  70%  { transform: translate(-50%, -50%) scale(1.2); opacity: .95; }
+  100% { transform: translate(-50%, -50%) scale(1);   opacity: 0; }
+}
+
+.sparkle {
+  position: absolute;
+  transform: translate(-50%, -50%) scale(0.9);
+  font-size: 20px;
+  animation: cb-sparkleFly 0.9s ease-out forwards;
+  pointer-events: none;
+}
+
+/* -----------------------------------------------------------
+   CHEERBUDDY — EMOJI BURST
+----------------------------------------------------------- */
+@keyframes cb-burst {
+  0%   { transform: translate(-50%, -50%) scale(.6); opacity: 1; }
+  70%  { opacity: 1; }
+  100% {
+    transform: translate(calc(-50% + var(--x)),
+                         calc(-50% + var(--y) - 24px)) scale(1);
+    opacity: 0;
+  }
+}
+.cb-emoji-spark {
+  position: absolute;
+  top: 50%; left: 50%;
+  pointer-events: none;
+  font-size: 14px;
+  animation: cb-burst 700ms ease-out forwards;
+}
+
+/* -----------------------------------------------------------
+   CHEERBUDDY — PRO CHEER BURST (HALO + SPARKS)
+----------------------------------------------------------- */
+:root {
+  --cb-spark-min: 26px;
+  --cb-spark-max: 54px;
+  --cb-spark-dur: 700ms;
+}
+
+.cb-cheer-halo {
+  position: absolute;
+  inset: -6px;
+  border-radius: 14px;
+  pointer-events: none;
+  opacity: 0;
+  transform: scale(.9);
+  background:
+    radial-gradient(60% 60% at 50% 50%, rgba(56,189,248,.28), transparent 65%),
+    radial-gradient(100% 60% at 50% 50%, rgba(20,184,166,.18), transparent 70%);
+  transition: opacity 220ms ease, transform 220ms ease;
+}
+.cb-cheer-press .cb-cheer-halo {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.cb-spark {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%,-50%);
+  pointer-events: none;
+}
+
+.cb-spark::after {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 18px; height: 2px;
+  border-radius: 2px;
+  transform: translate(-50%, -50%) rotate(var(--rot,0));
+  background: linear-gradient(90deg,
+              rgba(255,255,255,.8),
+              rgba(255,255,255,0));
+}
+
+@keyframes cb-out {
+  0%   { transform: translate(-50%,-50%) scale(.8); opacity: 1; }
+  100% {
+    transform: translate(calc(-50% + var(--tx)),
+                         calc(-50% + var(--ty))) scale(1);
+    opacity: 0;
+  }
+}
+
+.cb-s1 { animation: cb-out var(--cb-spark-dur) ease-out forwards; }
+.cb-s2 { animation: cb-out calc(var(--cb-spark-dur) + 60ms) ease-out forwards; }
+.cb-s3 { animation: cb-out calc(var(--cb-spark-dur) + 140ms) ease-out forwards; }
+
+/* -----------------------------------------------------------
+   REDUCED MOTION SAFETY
+----------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .cb-spark,
+  .cb-cheer-halo,
+  .animate-pulse-soft,
+  .animate-rotate3d,
+  .animate-pop,
+  .animate-scaleIn,
+  .animate-fadeIn {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* -----------------------------------------------------------
+   SHIMMER + GRADIENT UTILITIES
+----------------------------------------------------------- */
+@layer utilities {
+  .gradient-text {
+    background-size: 200% 100%;
+    background-position: 0%;
+  }
+
+  @keyframes cb-shimmer {
+    0%   { background-position: 0% 0%; }
+    100% { background-position: 200% 0%; }
+  }
+
+  .animate-shimmer {
+    animation: cb-shimmer 8s linear infinite;
+  }
+}
+/* ------------------------------------------
+   UNIVERSAL SECTION REVEAL (Option C)
+------------------------------------------- */
+
+.cb-reveal {
+  opacity: 0;
+  transform: translateY(40px) scale(.97);
+  transition:
+    opacity .7s ease,
+    transform .7s ease;
+  will-change: opacity, transform;
+}
+
+.cb-reveal.cb-active {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+/* -----------------------------------------------------------
+   B1 — Gentle Hero Zoom + Parallax
+----------------------------------------------------------- */
+
+/* gentle zoom on load */
+@keyframes hero-zoom-in {
+  0%   { transform: scale(0.97); opacity: 0; }
+  100% { transform: scale(1);    opacity: 1; }
+}
+
+.hero-zoom {
+  animation: hero-zoom-in 1.2s ease-out forwards;
+}
+
+/* subtle parallax on scroll */
+.hero-parallax {
+  transform: translateY(calc(var(--scroll, 0) * 0.18));
+  transition: transform 0.05s linear;
+}
+
+/* button fade-in */
+@keyframes hero-button-fade {
+  0% { opacity: 0; transform: translateY(12px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.hero-button {
+  animation: hero-button-fade 0.9s ease-out forwards;
+  animation-delay: 0.4s;
+}
+
+/* -----------------------------------------------------------
+   Subtle fade-up for sections
+----------------------------------------------------------- */
+
+@keyframes soft-fade-up {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.soft-appear {
+  opacity: 0;
+  animation: soft-fade-up 0.6s ease-out forwards;
+}
+
+.soft-appear-delayed {
+  opacity: 0;
+  animation: soft-fade-up 0.8s ease-out forwards;
+  animation-delay: 0.15s;
+}
+:root {
+  --footer-height: 6rem; /* adjust based on real height */
+}

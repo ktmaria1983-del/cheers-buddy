@@ -1,0 +1,176 @@
+@import "tailwindcss";
+
+/* optional small tweaks */
+html, body { height: 100%; margin: 0; padding: 0; }
+* { -webkit-tap-highlight-color: transparent; }
+:focus-visible { outline: 2px solid #93c5fd; outline-offset: 2px; }
+/* Pop scale (you already used this class name) */
+@keyframes fadeIn {
+  from { opacity: 0 }
+  to   { opacity: 1 }
+}
+
+@keyframes scaleIn {
+  0%   { transform: scale(0.85); opacity: 0 }
+  100% { transform: scale(1); opacity: 1 }
+}
+
+.animate-fadeIn {
+  animation: fadeIn .35s ease-out;
+}
+
+.animate-[scaleIn_.35s_ease-out] {
+  animation: scaleIn .35s ease-out;
+}
+
+@keyframes pop {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.15); }
+  100% { transform: scale(1); }
+}
+.animate-pop { animation: pop 250ms ease-out; }
+
+/* Sparkle burst */
+.sparkle {
+  position: absolute;
+  transform: translate(-50%, -50%) translate(0, 0) scale(0.9);
+  font-size: 20px;
+  will-change: transform, opacity;
+  animation: sparkle-fly 0.9s ease-out forwards;
+  pointer-events: none;
+}
+
+@keyframes sparkle-fly {
+  0%   { transform: translate(-50%, -50%) translate(0, 0) scale(0.8) rotate(0deg);   opacity: 1; }
+  70%  { transform: translate(-50%, -50%) translate(calc(var(--dx)*0.8), calc(var(--dy)*0.8)) scale(1.2) rotate(35deg); opacity: .95; }
+  100% { transform: translate(-50%, -50%) translate(var(--dx), var(--dy)) scale(1.0) rotate(60deg); opacity: 0; }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 10px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.3s ease-out;
+}
+/* ===== Professional Cheer Burst ===== */
+:root {
+  --cb-spark-min: 26px;
+  --cb-spark-max: 54px;
+  --cb-spark-dur: 700ms;
+}
+
+.cb-cheer-halo {
+  position: absolute;
+  inset: -6px;
+  border-radius: 14px;
+  pointer-events: none;
+  opacity: 0;
+  transform: scale(.9);
+  background:
+    radial-gradient(60% 60% at 50% 50%, rgba(56,189,248,.28), transparent 65%),
+    radial-gradient(100% 60% at 50% 50%, rgba(20,184,166,.18), transparent 70%);
+  transition: opacity 220ms ease, transform 220ms ease;
+}
+.cb-cheer-press .cb-cheer-halo {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.cb-spark {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%,-50%) translate3d(0,0,0);
+  will-change: transform, opacity;
+  pointer-events: none;
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,.35));
+}
+
+.cb-spark::after {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 18px; height: 2px;
+  border-radius: 2px;
+  transform: translate(-50%,-50%) rotate(var(--rot,0));
+  background: linear-gradient(90deg, rgba(255,255,255,.7), rgba(255,255,255,0));
+  opacity: .0;
+}
+
+@keyframes cb-out {
+  0%   { transform: translate(-50%,-50%) translate3d(0,0,0) scale(.8); opacity: 1; }
+  60%  { opacity: 1; }
+  100% { transform: translate(-50%,-50%) translate3d(var(--tx,0), var(--ty,0), 0) scale(1); opacity: 0; }
+}
+
+.cb-s1 { animation: cb-out calc(var(--dur,700ms)) cubic-bezier(.16,.94,.21,1) forwards; }
+.cb-s2 { animation: cb-out calc(var(--dur,760ms)) cubic-bezier(.2,.8,.16,1) forwards;  }
+.cb-s3 { animation: cb-out calc(var(--dur,840ms)) cubic-bezier(.18,.9,.2,1) forwards;  }
+
+@media (prefers-reduced-motion: reduce) {
+  .cb-spark, .cb-cheer-halo { animation: none !important; transition: none !important; }
+}
+/* pop scale on button */
+@keyframes pop { 0%{transform:scale(1)} 40%{transform:scale(1.08)} 100%{transform:scale(1)} }
+.animate-pop { animation: pop 220ms ease-out both; }
+
+/* emoji burst */
+@keyframes cb-burst {
+  0%   { transform: translate(-50%, -50%) scale(.6) rotate(0deg); opacity: 1; }
+  70%  { opacity: 1; }
+  100% { transform: translate(calc(-50% + var(--x)), calc(-50% + var(--y) - 24px)) scale(1); opacity: 0; }
+}
+.cb-emoji-spark {
+  position: absolute;
+  top: 50%; left: 50%;
+  pointer-events: none;
+  font-size: 14px;
+  animation: cb-burst 700ms ease-out forwards;
+  will-change: transform, opacity;
+}
+/* ===== Gradient text + shimmer utilities ===== */
+@layer utilities {
+  .gradient-text {
+    background-size: 200% 100%;
+    background-position: 0% 0%;
+  }
+
+  @keyframes shimmer {
+    0%   { background-position: 0% 0%;   }
+    100% { background-position: 200% 0%; }
+  }
+
+  .animate-shimmer {
+    animation: shimmer 8s linear infinite;
+  }
+  @keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.96); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.25s ease-out;
+}
+
+}
+@keyframes pulseSoft {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.4);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px 6px rgba(99, 102, 241, 0.25);
+  }
+}
+
+.animate-pulse-soft {
+  animation: pulseSoft 4s ease-in-out infinite;
+}
