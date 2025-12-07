@@ -34,8 +34,6 @@ export default function RootLayout({
       >
         {/* Navbar stays at the top */}
         <NavBar />
-        <CommunityPopup />
-
 
         {/* Community popup appears globally */}
         {/* <CommunityPopup /> */}
