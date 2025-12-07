@@ -6,10 +6,10 @@ import IntroHero from "./components/IntroHero";
 import BigSelect from "./components/BigSelect";
 
 const CATEGORIES = [
-  "Coding", "Fitness", "Music", "Writing", "Study Skills",
+  "Sewing", "Coding", "Fitness", "Music", "Writing", "Study Skills",
   "Career", "Mindset", "Confidence", "English", "Parenting", "Health",
   "Habits", "Creativity", "Public Speaking", "Finance", "Spiritual",
-  "Productivity", "Sewing", "Relationships", "Nutrition", "Sleep", "Meditation",
+  "Productivity", "Relationships", "Nutrition", "Sleep", "Meditation",
   "Learning", "Job Search", "Design", "Art"
 ];
 
