@@ -6,9 +6,7 @@ import type { Metadata } from "next";
 import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
 import LegalFooter from "./components/LegalFooter";
-// import CommunityPopup from "@/components/CommunityPopup";
-
-
+import CommunityPopup from "@/components/CommunityPopup";
 
 export const metadata: Metadata = {
   title: "CheersBuddy",
@@ -35,7 +33,7 @@ export default function RootLayout({
         <NavBar />
 
         {/* Community popup appears globally */}
-        {/* <CommunityPopup /> */}
+        <CommunityPopup />
 
         {/* Main content */}
         <main className="mx-auto max-w-7xl px-6 md:px-10 pt-36 pb-24">

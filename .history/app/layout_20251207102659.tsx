@@ -8,8 +8,6 @@ import Footer from "./components/Footer";
 import LegalFooter from "./components/LegalFooter";
 // import CommunityPopup from "@/components/CommunityPopup";
 
-
-
 export const metadata: Metadata = {
   title: "CheersBuddy",
   description: "Real people cheering real progress",
